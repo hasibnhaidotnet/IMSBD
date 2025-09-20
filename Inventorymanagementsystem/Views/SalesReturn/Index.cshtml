@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModels.SalesReturnViewModel>
+
+@{
+    ViewData["Title"] = "Sales Returns";
+}
+
+<h2 class="text-2xl font-bold mb-4">Sales Return List</h2>
+
+<a asp-action="Create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4 inline-block">+ Add Sales Return</a>
+
+<table class="table-auto w-full border text-sm">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="border px-2 py-1 text-left">#</th>
+            <th class="border px-2 py-1 text-left">Product</th>
+            <th class="border px-2 py-1 text-right">Qty</th>
+            <th class="border px-2 py-1 text-left">Return Date</th>
+            <th class="border px-2 py-1 text-left">Note</th>
+            <th class="border px-2 py-1 text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="border px-2 py-1">@item.Id</td>
+                <td class="border px-2 py-1">@item.ProductName</td>
+                <td class="border px-2 py-1 text-right">@item.Quantity</td>
+                <td class="border px-2 py-1">@item.ReturnDate.ToString("yyyy-MM-dd")</td>
+                <td class="border px-2 py-1">@item.Note</td>
+                <td class="border px-2 py-1 text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="text-blue-600 hover:underline">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="text-green-600 hover:underline">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="text-red-600 hover:underline">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

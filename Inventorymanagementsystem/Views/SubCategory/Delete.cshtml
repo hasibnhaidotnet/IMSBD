@@ -1,0 +1,24 @@
+﻿@model Inventorymanagementsystem.ViewModels.SubCategoryViewModel
+@{
+    ViewData["Title"] = "Delete SubCategory";
+}
+
+<div class="max-w-xl mx-auto p-6 bg-white shadow rounded-xl">
+    <h2 class="text-xl font-semibold mb-4 text-red-600">❌ Confirm Delete</h2>
+
+    <div class="mb-3">
+        <span class="font-medium text-gray-600">Name:</span>
+        <span class="text-gray-800">@Model.Name</span>
+    </div>
+
+    <div class="mb-3">
+        <span class="font-medium text-gray-600">Category:</span>
+        <span class="text-gray-800">@Model.CategoryList?.FirstOrDefault()?.Text</span>
+    </div>
+
+    <form asp-action="DeleteConfirmed" method="post" class="mt-4 flex gap-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 transition">🗑️ Yes, Delete</button>
+        <a asp-action="Index" class="bg-gray-500 text-white px-5 py-2 rounded-md hover:bg-gray-600 transition">↩️ Cancel</a>
+    </form>
+</div>

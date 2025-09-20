@@ -1,0 +1,21 @@
+﻿@model Inventorymanagementsystem.ViewModels.UnitViewModel
+@{
+    ViewData["Title"] = "Create Unit";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Create Unit</h2>
+
+<form asp-action="Create" method="post" class="space-y-4">
+    <div>
+        <label asp-for="Name" class="block font-medium"></label>
+        <input asp-for="Name" class="w-full border rounded px-3 py-2" />
+        <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+    </div>
+
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 shadow">Save</button>
+    <a asp-action="Index" class="ml-2 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 shadow">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

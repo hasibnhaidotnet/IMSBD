@@ -1,0 +1,116 @@
+﻿@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@model Inventorymanagementsystem.ViewModels.QuotationViewModel
+@{
+    ViewData["Title"] = "Create Quotation";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Create New Quotation</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-red-500 mb-3"></div>
+
+    <div class="mb-4">
+        <label asp-for="ClientId" class="block font-medium">Select Client</label>
+        <select asp-for="ClientId" asp-items="Model.Clients" class="form-select w-full rounded-md">
+            <option value="">-- Select Client --</option>
+        </select>
+        <span asp-validation-for="ClientId" class="text-red-500"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="QuotationDate" class="block font-medium">Quotation Date</label>
+        <input asp-for="QuotationDate" class="form-input w-full rounded-md" type="date" />
+        <span asp-validation-for="QuotationDate" class="text-red-500"></span>
+    </div>
+
+    <div>
+        <h4 class="text-lg font-bold mt-6 mb-2">Quotation Items</h4>
+        <table class="table-auto w-full border">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-2 py-1 text-left">Product</th>
+                    <th class="px-2 py-1 text-left">Quantity</th>
+                    <th class="px-2 py-1 text-left">Price</th>
+                    <th class="px-2 py-1"></th>
+                </tr>
+            </thead>
+            <tbody id="itemContainer">
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    <tr>
+                        <td class="px-2 py-1">
+                            <select asp-for="Items[@i].ProductId" asp-items="Model.Items[@i].ProductList" class="form-select w-full">
+                                <option value="">-- Select Product --</option>
+                            </select>
+                            <span asp-validation-for="Items[@i].ProductId" class="text-red-500"></span>
+                        </td>
+                        <td class="px-2 py-1">
+                            <input asp-for="Items[@i].Quantity" class="form-input w-full" />
+                            <span asp-validation-for="Items[@i].Quantity" class="text-red-500"></span>
+                        </td>
+                        <td class="px-2 py-1">
+                            <input asp-for="Items[@i].SellingPrice" class="form-input w-full" />
+                            <span asp-validation-for="Items[@i].SellingPrice" class="text-red-500"></span>
+                        </td>
+                        <td class="px-2 py-1">
+                            <button type="button" onclick="removeItem(this)" class="text-red-600 hover:underline">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="button" onclick="addItem()" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Add Item</button>
+    </div>
+
+    <button type="submit" class="mt-6 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Save Quotation</button>
+    <a asp-action="Index" class="ml-4 text-gray-600 hover:underline">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function removeItem(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+
+        function addItem() {
+            let index = document.querySelectorAll("#itemContainer tr").length;
+            const row = `
+                <tr>
+                    <td class="px-2 py-1">
+                        <select name="Items[${index}].ProductId" class="form-select w-full">
+                            <option value="">-- Select Product --</option>
+        @foreach (var p in Model.Items.First().ProductList)
+        {
+                                    <option value="@p.Value">@p.Text</option>
+        }
+                        </select>
+                    </td>
+                    <td class="px-2 py-1">
+                        <input name="Items[${index}].Quantity" class="form-input w-full" />
+                    </td>
+                    <td class="px-2 py-1">
+                        <input name="Items[${index}].SellingPrice" class="form-input w-full" />
+                    </td>
+                    <td class="px-2 py-1">
+                        <button type="button" onclick="removeItem(this)" class="text-red-600 hover:underline">Remove</button>
+                    </td>
+                </tr>`;
+            document.getElementById('itemContainer').insertAdjacentHTML('beforeend', row);
+        }
+    </script>
+}

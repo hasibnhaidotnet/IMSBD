@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModels.UnitViewModel>
+@{
+    ViewData["Title"] = "Unit List";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Unit List</h2>
+
+<a asp-action="Create" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 shadow">+ Add New Unit</a>
+
+<table class="table-auto w-full border border-gray-300">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="border px-4 py-2 text-left">#</th>
+            <th class="border px-4 py-2 text-left">Unit Name</th>
+            <th class="border px-4 py-2 text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="border px-4 py-2">@count</td>
+                    <td class="border px-4 py-2">@item.Name</td>
+                    <td class="border px-4 py-2 text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="text-blue-600 hover:underline">View</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-yellow-600 hover:underline">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-red-600 hover:underline">Delete</a>
+                    </td>
+                </tr>
+                count++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td class="border px-4 py-2 text-center" colspan="3">No units found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

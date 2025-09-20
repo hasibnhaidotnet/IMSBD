@@ -1,0 +1,90 @@
+﻿@model Inventorymanagementsystem.ViewModels.ProductViewModel
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<h2 class="mb-4">Edit Product</h2>
+
+<form asp-action="Edit" method="post" class="bg-dark p-4 rounded shadow-sm">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Brand" class="form-label"></label>
+            <input asp-for="Brand" class="form-control" />
+            <span asp-validation-for="Brand" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="ProductCode" class="form-label"></label>
+            <input asp-for="ProductCode" class="form-control" />
+            <span asp-validation-for="ProductCode" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="UnitId" class="form-label"></label>
+            <select asp-for="UnitId" class="form-select" asp-items="Model.UnitList">
+                <option value="">-- Select Unit --</option>
+            </select>
+            <span asp-validation-for="UnitId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="CategoryId" class="form-label"></label>
+            <select asp-for="CategoryId" class="form-select" asp-items="Model.CategoryList">
+                <option value="">-- Select Category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="SubCategoryId" class="form-label"></label>
+            <select asp-for="SubCategoryId" class="form-select" asp-items="Model.SubCategoryList">
+                <option value="">-- Select Subcategory --</option>
+            </select>
+            <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="PurchasePrice" class="form-label"></label>
+            <input asp-for="PurchasePrice" class="form-control" />
+            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="SellingPrice" class="form-label"></label>
+            <input asp-for="SellingPrice" class="form-control" />
+            <span asp-validation-for="SellingPrice" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MinimumStockAlert" class="form-label"></label>
+        <input asp-for="MinimumStockAlert" class="form-control" />
+        <span asp-validation-for="MinimumStockAlert" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

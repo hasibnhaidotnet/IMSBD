@@ -1,0 +1,51 @@
+﻿@model IList<Inventorymanagementsystem.ViewModels.QuotationItemViewModel>
+
+<div class="card mt-4">
+    <div class="card-header bg-light">
+        <strong>Quotation Items</strong>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered" id="quotation-items-table">
+            <thead class="table-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th><button type="button" class="btn btn-sm btn-success" onclick="addRow()">+</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <select asp-for="@Model[i].ProductId" asp-items="@Model[i].ProductList" class="form-select"></select>
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Quantity" class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].SellingPrice" class="form-control" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">x</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addRow() {
+            // AJAX-based row cloning can be implemented later
+            alert('Dynamic row add logic here');
+        }
+
+        function removeRow(button) {
+            $(button).closest('tr').remove();
+        }
+    </script>
+}

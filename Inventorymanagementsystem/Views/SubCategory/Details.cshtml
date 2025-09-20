@@ -1,0 +1,23 @@
+﻿@model Inventorymanagementsystem.ViewModels.SubCategoryViewModel
+@{
+    ViewData["Title"] = "SubCategory Details";
+}
+
+<div class="max-w-xl mx-auto p-6 bg-white shadow rounded-xl">
+    <h2 class="text-xl font-semibold mb-4 text-gray-800">📄 SubCategory Details</h2>
+
+    <div class="mb-3">
+        <span class="font-medium text-gray-600">Name:</span>
+        <span class="text-gray-800">@Model.Name</span>
+    </div>
+
+    <div class="mb-3">
+        <span class="font-medium text-gray-600">Category:</span>
+        <span class="text-gray-800">@Model.CategoryList?.FirstOrDefault()?.Text</span>
+    </div>
+
+    <div class="flex gap-3 mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="bg-yellow-400 text-gray-900 px-4 py-2 rounded hover:bg-yellow-500">✏️ Edit</a>
+        <a asp-action="Index" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">↩️ Back</a>
+    </div>
+</div>

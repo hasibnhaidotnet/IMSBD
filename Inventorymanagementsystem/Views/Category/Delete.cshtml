@@ -1,0 +1,14 @@
+﻿@model Inventorymanagementsystem.Models.Category
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<h2 class="text-xl font-bold mb-4">Delete Category</h2>
+
+<div class="alert alert-danger">Are you sure you want to delete <strong>@Model.Name</strong>?</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

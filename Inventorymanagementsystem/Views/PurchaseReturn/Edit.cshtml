@@ -1,0 +1,45 @@
+﻿@model Inventorymanagementsystem.ViewModel.PurchaseReturnViewModel
+
+@{
+    ViewData["Title"] = "Edit Purchase Return";
+}
+
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Edit Purchase Return</h2>
+
+    <form asp-action="Edit" method="post" class="space-y-4">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+
+        <div>
+            <label asp-for="PurchaseItemId" class="block text-gray-700 font-medium mb-1">Purchase Item</label>
+            <select asp-for="PurchaseItemId" asp-items="Model.PurchaseItemList" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">-- Select Item --</option>
+            </select>
+            <span asp-validation-for="PurchaseItemId" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Quantity" class="block text-gray-700 font-medium mb-1">Quantity</label>
+            <input asp-for="Quantity" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            <span asp-validation-for="Quantity" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="ReturnDate" class="block text-gray-700 font-medium mb-1">Return Date</label>
+            <input asp-for="ReturnDate" type="date" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            <span asp-validation-for="ReturnDate" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-4">
+            <a asp-action="Index" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Cancel</a>
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

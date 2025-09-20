@@ -1,0 +1,34 @@
+﻿@model Inventorymanagementsystem.ViewModel.PurchaseReturnViewModel
+@{
+    ViewData["Title"] = "Create Purchase Return";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-xl font-bold mb-4">Create Purchase Return</h2>
+
+<form asp-action="Create" method="post" class="space-y-4">
+    <div class="form-group">
+        <label asp-for="PurchaseItemId"></label>
+        <select asp-for="PurchaseItemId" asp-items="Model.PurchaseItemList" class="form-select"></select>
+        <span asp-validation-for="PurchaseItemId" class="text-red-500 text-sm"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-input" />
+        <span asp-validation-for="Quantity" class="text-red-500 text-sm"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReturnDate"></label>
+        <input asp-for="ReturnDate" class="form-input" />
+        <span asp-validation-for="ReturnDate" class="text-red-500 text-sm"></span>
+    </div>
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Save</button>
+    <a asp-action="Index" class="ml-3 text-gray-300 hover:underline">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

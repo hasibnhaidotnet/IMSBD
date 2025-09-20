@@ -1,0 +1,95 @@
+﻿@model Inventorymanagementsystem.ViewModels.MemoReportViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Print Memo Report</title>
+
+    @* Razor-safe print media *@
+    <style>
+        @Html.Raw("@media print { .no-print { display: none !important; } body { font-size: 12px; } table { font-size: 12px; } @page { size: A4; margin: 12mm; } }")
+    </style>
+
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; margin: 20px; color: #222; }
+        .no-print { margin-bottom: 12px; }
+        .btn { display:inline-block; padding:6px 10px; border-radius:4px; text-decoration:none; color:#fff; background:#007bff; border: none; cursor: pointer; }
+        .btn-close { background:#6c757d; margin-left:8px; }
+        h2 { text-align: center; margin-bottom: 18px; font-size:18px; }
+        .memo-block { margin-bottom: 18px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; font-size: 12px; }
+        th { background: #f5f5f5; font-weight:600; }
+        .text-right { text-align: right; }
+        .subtotal { font-weight: 700; text-align: right; margin-top: 6px; }
+        hr { border: none; border-top: 1px solid #e0e0e0; margin: 12px 0; }
+        .report-footer { text-align: right; margin-top: 10px; font-weight:600; }
+        .small-muted { color:#6c757d; font-size:11px; }
+    </style>
+</head>
+<body onload="window.print()">
+    <div class="no-print" style="text-align:right;">
+        <button class="btn" onclick="window.print();">🖨 Print</button>
+        <button class="btn btn-close" onclick="window.close();">✖ Close</button>
+    </div>
+
+    <h2>Memo Report</h2>
+
+    @foreach (var memo in Model.Memos)
+    {
+        <div class="memo-block">
+            <div>
+                <strong>@memo.MemoType Memo</strong> - @memo.MemoNo
+            </div>
+            <div class="small-muted">
+                Date: @memo.Date.ToString("dd MMM yyyy")
+            </div>
+            <div style="margin-top:6px;">
+                <strong>@(memo.MemoType == "Purchase" ? "Supplier" : "Buyer")</strong>: @memo.ClientName
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-right">Qty</th>
+                        <th>Unit</th>
+                        <th class="text-right">Unit Price</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in memo.Items)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td class="text-right">@string.Format("{0:N0}", item.Quantity)</td>
+                            <td>@item.UnitName</td>
+                            <td class="text-right">@item.UnitPrice.ToString("0.00")</td>
+                            <td class="text-right">@item.Total.ToString("0.00")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="subtotal">Subtotal: @memo.Subtotal.ToString("0.00")</div>
+            <hr />
+        </div>
+    }
+
+    <div class="report-footer">
+        <div>Total Purchase: @Model.TotalPurchase.ToString("0.00")</div>
+        <div>Total Sales: @Model.TotalSales.ToString("0.00")</div>
+
+        @{
+            var net = Model.TotalSales - Model.TotalPurchase;
+            var isProfit = net >= 0;
+        }
+        <div>@(isProfit ? "Net Profit" : "Net Loss"): @Math.Abs(net).ToString("0.00")</div>
+    </div>
+</body>
+</html>

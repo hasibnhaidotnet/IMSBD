@@ -1,0 +1,39 @@
+﻿@model Inventorymanagementsystem.ViewModels.QuotationViewModel
+@{
+    ViewData["Title"] = "Quotation Details";
+}
+
+<h2 class="text-2xl font-bold mb-4">Quotation Details</h2>
+
+<div class="mb-4">
+    <strong>Client:</strong> @Model.ClientName
+</div>
+<div class="mb-4">
+    <strong>Quotation Date:</strong> @Model.QuotationDate.ToString("dd MMM yyyy")
+</div>
+
+<h4 class="text-lg font-semibold mb-2">Quotation Items</h4>
+<table class="table-auto w-full border">
+    <thead class="bg-gray-100">
+        <tr>
+            <th class="px-2 py-1 text-black">Product</th>
+            <th class="px-2 py-1 text-black">Quantity</th>
+            <th class="px-2 py-1 text-black">Price</th>
+            <th class="px-2 py-1 text-black">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td class="px-2 py-1">@item.ProductName</td>
+                <td class="px-2 py-1">@item.Quantity</td>
+                <td class="px-2 py-1">@item.SellingPrice</td>
+                <td class="px-2 py-1">@((item.Quantity * (double)item.SellingPrice).ToString("0.00"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="mt-4 inline-block text-blue-600 hover:underline">Edit</a>
+<a asp-action="Index" class="ml-4 text-gray-600 hover:underline">Back to List</a>

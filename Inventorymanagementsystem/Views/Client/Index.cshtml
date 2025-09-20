@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModels.ClientViewModel>
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<div class="max-w-6xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-semibold text-white">👥 All Clients</h2>
+        <a asp-action="Create"
+           class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">
+            + Add Client
+        </a>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg shadow-inner bg-gray-900">
+        <table class="min-w-full divide-y divide-gray-700 text-gray-200">
+            <thead class="bg-gray-700">
+                <tr>
+                    <th class="py-3 px-4 text-left text-sm font-semibold">Name</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold">Type</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold">Phone</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold">Email</th>
+                    <th class="py-3 px-4 text-right text-sm font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+                @foreach (var client in Model)
+                {
+                    <tr class="hover:bg-gray-700 transition">
+                        <td class="py-3 px-4">@client.Name</td>
+                        <td class="py-3 px-4">@client.ClientType</td>
+                        <td class="py-3 px-4">@client.Phone</td>
+                        <td class="py-3 px-4">@client.Email</td>
+                        <td class="py-3 px-4 text-right space-x-2">
+                            <a asp-action="Details" asp-route-id="@client.Id"
+                               class="inline-block px-3 py-1 bg-indigo-600 rounded hover:bg-indigo-700 text-xs text-white">
+                                View
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@client.Id"
+                               class="inline-block px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500 text-xs text-gray-900">
+                                Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@client.Id"
+                               class="inline-block px-3 py-1 bg-red-600 rounded hover:bg-red-700 text-xs text-white">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

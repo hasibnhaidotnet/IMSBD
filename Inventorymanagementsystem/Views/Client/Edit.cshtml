@@ -1,0 +1,17 @@
+﻿@model Inventorymanagementsystem.ViewModels.ClientViewModel
+@{
+    ViewData["Title"] = "Edit Client";
+}
+
+<h2 class="text-xl font-semibold mb-4">Edit Client</h2>
+
+<form asp-action="Edit" method="post" class="bg-gray-800 p-6 rounded shadow-md space-y-4">
+    <input type="hidden" asp-for="Id" />
+    <partial name="_Form" />
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

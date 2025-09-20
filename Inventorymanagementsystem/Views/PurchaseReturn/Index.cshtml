@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModel.PurchaseReturnViewModel>
+
+@{
+    ViewData["Title"] = "Purchase Returns";
+}
+
+<div class="max-w-7xl mx-auto p-6 bg-gray-900 rounded-2xl shadow-xl text-white">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold">All Purchase Returns</h2>
+        <a asp-action="Create" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition">
+            + Add Return
+        </a>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl shadow-inner border border-gray-700">
+        <table class="min-w-full divide-y divide-gray-700 text-sm text-left">
+            <thead class="bg-gray-800 text-gray-300 uppercase tracking-wider text-xs">
+                <tr>
+                    <th class="px-4 py-3">Product</th>
+                    <th class="px-4 py-3">Supplier</th>
+                    <th class="px-4 py-3">Quantity</th>
+                    <th class="px-4 py-3">Return Date</th>
+                    <th class="px-4 py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800">
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-800 transition">
+                            <td class="px-4 py-3">@item.ProductName</td>
+                            <td class="px-4 py-3">@item.SupplierName</td>
+                            <td class="px-4 py-3">@item.Quantity</td>
+                            <td class="px-4 py-3">@item.ReturnDate.ToString("yyyy-MM-dd")</td>
+                            <td class="px-4 py-3 text-center space-x-4 whitespace-nowrap">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="text-yellow-400 hover:text-yellow-300 font-medium">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="text-red-500 hover:text-red-400 font-medium">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-6 text-gray-400 italic">No purchase returns found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@model Inventorymanagementsystem.ViewModels.SalesReturnViewModel
+
+@{
+    ViewData["Title"] = "Add Sales Return";
+}
+
+<h2 class="text-2xl font-bold mb-4">Add Sales Return</h2>
+
+<form asp-action="Create" method="post" class="space-y-4">
+    <div>
+        <label asp-for="ProductId" class="font-semibold block">Product</label>
+        <select asp-for="ProductId" asp-items="Model.ProductList" class="form-select w-full"></select>
+        <span asp-validation-for="ProductId" class="text-red-500 text-sm"></span>
+    </div>
+
+    <div>
+        <label asp-for="Quantity" class="font-semibold block">Return Quantity</label>
+        <input asp-for="Quantity" class="form-input w-full" />
+        <span class="text-sm text-gray-500">Max Returnable: @Model.MaxReturnableQuantity</span>
+        <span asp-validation-for="Quantity" class="text-red-500 text-sm"></span>
+    </div>
+
+    <div>
+        <label asp-for="ReturnDate" class="font-semibold block">Return Date</label>
+        <input asp-for="ReturnDate" type="date" class="form-input w-full" />
+        <span asp-validation-for="ReturnDate" class="text-red-500 text-sm"></span>
+    </div>
+
+    <div>
+        <label asp-for="Note" class="font-semibold block">Note</label>
+        <textarea asp-for="Note" class="form-textarea w-full"></textarea>
+        <span asp-validation-for="Note" class="text-red-500 text-sm"></span>
+    </div>
+
+    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">Save</button>
+    <a asp-action="Index" class="ml-2 text-gray-700 hover:underline">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

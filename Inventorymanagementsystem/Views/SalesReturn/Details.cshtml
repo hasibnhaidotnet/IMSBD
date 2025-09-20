@@ -1,0 +1,17 @@
+﻿@model Inventorymanagementsystem.ViewModels.SalesReturnViewModel
+
+@{
+    ViewData["Title"] = "Sales Return Details";
+}
+
+<h2 class="text-2xl font-bold mb-4">Sales Return Details</h2>
+
+<div class="space-y-2">
+    <div><strong>Product:</strong> @Model.ProductName</div>
+    <div><strong>Quantity:</strong> @Model.Quantity</div>
+    <div><strong>Return Date:</strong> @Model.ReturnDate.ToString("yyyy-MM-dd")</div>
+    <div><strong>Note:</strong> @Model.Note</div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">Edit</a>
+<a asp-action="Index" class="ml-2 text-gray-700 hover:underline">Back to List</a>

@@ -1,0 +1,63 @@
+﻿@model Inventorymanagementsystem.ViewModels.TransactionViewModel
+
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="bg-gray-800 rounded-xl shadow-md p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-white">📄 Transaction Details</h2>
+            <a asp-action="Index"
+               class="px-4 py-2 bg-gray-600 text-white text-sm rounded-lg hover:bg-gray-700 transition">
+                ← Back to List
+            </a>
+        </div>
+
+        <!-- Details -->
+        <div class="bg-gray-900 rounded-lg p-5 border border-gray-700">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-gray-200">
+                <div>
+                    <dt class="font-semibold text-gray-400">Client Name</dt>
+                    <dd class="mt-1">@Model.ClientName</dd>
+                </div>
+
+                <div>
+                    <dt class="font-semibold text-gray-400">Transaction Type</dt>
+                    <dd class="mt-1">@Model.TransactionType</dd>
+                </div>
+
+                <div>
+                    <dt class="font-semibold text-gray-400">Amount</dt>
+                    <dd class="mt-1">@Model.Amount.ToString("C")</dd>
+                </div>
+
+                <div>
+                    <dt class="font-semibold text-gray-400">Date</dt>
+                    <dd class="mt-1">@Model.TransactionDate.ToShortDateString()</dd>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Note))
+                {
+                    <div class="sm:col-span-2">
+                        <dt class="font-semibold text-gray-400">Note</dt>
+                        <dd class="mt-1">@Model.Note</dd>
+                    </div>
+                }
+            </dl>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center space-x-3 mt-6">
+            <a asp-action="Edit" asp-route-id="@Model.Id"
+               class="px-6 py-2 bg-yellow-500 text-gray-900 text-sm font-semibold rounded-lg shadow hover:bg-yellow-600 transition">
+                ✏️ Edit
+            </a>
+            <a asp-action="Index"
+               class="px-6 py-2 bg-gray-500 text-white text-sm font-semibold rounded-lg shadow hover:bg-gray-600 transition">
+                Back
+            </a>
+        </div>
+    </div>
+</div>

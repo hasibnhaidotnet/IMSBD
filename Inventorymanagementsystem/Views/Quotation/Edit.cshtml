@@ -1,0 +1,64 @@
+﻿@model Inventorymanagementsystem.ViewModels.QuotationViewModel
+@{
+    ViewData["Title"] = "Edit Quotation";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Edit Quotation</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="text-red-500 mb-3"></div>
+
+    <div class="mb-4">
+        <label asp-for="ClientId" class="block font-medium">Client</label>
+        <select asp-for="ClientId" asp-items="Model.Clients" class="form-select w-full">
+            <option value="">-- Select Client --</option>
+        </select>
+        <span asp-validation-for="ClientId" class="text-red-500"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="QuotationDate" class="block font-medium">Quotation Date</label>
+        <input asp-for="QuotationDate" class="form-input w-full" type="date" />
+        <span asp-validation-for="QuotationDate" class="text-red-500"></span>
+    </div>
+
+    <div class="mt-6">
+        <h4 class="text-lg font-bold mb-2">Quotation Items</h4>
+        <table class="table-auto w-full border">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-2 py-1">Product</th>
+                    <th class="px-2 py-1">Quantity</th>
+                    <th class="px-2 py-1">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    <tr>
+                        <td class="px-2 py-1">
+                            <select asp-for="Items[@i].ProductId" asp-items="Model.Items[@i].ProductList" class="form-select w-full">
+                                <option value="">-- Select Product --</option>
+                            </select>
+                        </td>
+                        <td class="px-2 py-1">
+                            <input asp-for="Items[@i].Quantity" class="form-input w-full" />
+                        </td>
+                        <td class="px-2 py-1">
+                            <input asp-for="Items[@i].SellingPrice" class="form-input w-full" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit" class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Update</button>
+    <a asp-action="Index" class="ml-4 text-gray-600 hover:underline">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

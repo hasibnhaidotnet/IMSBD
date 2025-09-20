@@ -1,0 +1,115 @@
+﻿@model Inventorymanagementsystem.ViewModels.PurchaseViewModel
+@{
+    ViewData["Title"] = "Edit Purchase";
+}
+
+<h2>Edit Purchase</h2>
+
+<form asp-action="Edit" method="post" class="space-y-4">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="MemoNo" class="form-label"></label>
+        <input asp-for="MemoNo" class="form-control" />
+        <span asp-validation-for="MemoNo" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PurchaseDate" class="form-label"></label>
+        <input asp-for="PurchaseDate" type="date" class="form-control" />
+        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ClientId" class="form-label"></label>
+        <select asp-for="ClientId" asp-items="Model.ClientList" class="form-select">
+            <option value="">-- Select Supplier --</option>
+        </select>
+        <span asp-validation-for="ClientId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PaidAmount" class="form-label"></label>
+        <input asp-for="PaidAmount" type="number" step="0.01" min="0" class="form-control" />
+        <span asp-validation-for="PaidAmount" class="text-danger"></span>
+    </div>
+
+    <h4>Purchase Items</h4>
+    <div id="purchaseItemsContainer">
+        @for (int i = 0; i < Model.Items.Count; i++)
+        {
+            <div class="row mb-3">
+                <input type="hidden" asp-for="Items[@i].Id" />
+                <input type="hidden" asp-for="Items[@i].PurchaseId" />
+                <div class="col-md-5">
+                    <label asp-for="Items[@i].ProductId"></label>
+                    <select asp-for="Items[@i].ProductId" asp-items="Model.ProductList" class="form-select"></select>
+                    <span asp-validation-for="Items[@i].ProductId" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Items[@i].Quantity"></label>
+                    <input asp-for="Items[@i].Quantity" class="form-control" />
+                    <span asp-validation-for="Items[@i].Quantity" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Items[@i].PurchasePrice"></label>
+                    <input asp-for="Items[@i].PurchasePrice" class="form-control" />
+                    <span asp-validation-for="Items[@i].PurchasePrice" class="text-danger"></span>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger remove-item">Remove</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" id="addItemBtn" class="btn btn-secondary mb-3">Add Product</button>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a asp-action="Index" class="btn btn-link">Back to List</a>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@4.0.0/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        let itemIndex = @Model.Items.Count;
+
+        $('#addItemBtn').click(function () {
+            const container = $('#purchaseItemsContainer');
+            const template = `
+                <div class="row mb-3">
+                    <input type="hidden" name="Items[${itemIndex}].Id" value="0" />
+                    <input type="hidden" name="Items[${itemIndex}].PurchaseId" value="@Model.Id" />
+                    <div class="col-md-5">
+                        <label>Product</label>
+                        <select name="Items[${itemIndex}].ProductId" class="form-select" required>
+                            <option value="">-- Select Product --</option>
+        @foreach (var item in Model.ProductList)
+        {
+            <text><option value="@item.Value">@item.Text</option></text>
+        }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Quantity</label>
+                        <input type="number" name="Items[${itemIndex}].Quantity" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Purchase Price</label>
+                        <input type="number" name="Items[${itemIndex}].PurchasePrice" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger remove-item">Remove</button>
+                    </div>
+                </div>
+            `;
+            container.append(template);
+            itemIndex++;
+        });
+
+        $(document).on('click', '.remove-item', function () {
+            $(this).closest('.row').remove();
+        });
+    </script>
+}

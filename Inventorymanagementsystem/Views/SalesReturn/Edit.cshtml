@@ -1,0 +1,62 @@
+﻿@model Inventorymanagementsystem.ViewModels.SalesReturnViewModel
+
+@{
+    ViewData["Title"] = "Edit Sales Return";
+}
+
+<h2 class="mb-4">Edit Sales Return</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="SaleItemId" />
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="ClientName" class="form-label">Client</label>
+                <input asp-for="ClientName" class="form-control" readonly />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="MemoNo" class="form-label">Memo No</label>
+                <input asp-for="MemoNo" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="ProductName" class="form-label">Product</label>
+                <input asp-for="ProductName" class="form-control" readonly />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Quantity" class="form-label">Return Quantity</label>
+                <input asp-for="Quantity" class="form-control" />
+                <small class="text-muted">Max Returnable: @Model.MaxReturnableQuantity</small>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="ReturnDate" class="form-label">Return Date</label>
+                <input asp-for="ReturnDate" class="form-control" type="date" />
+                <span asp-validation-for="ReturnDate" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Note" class="form-label">Note</label>
+                <textarea asp-for="Note" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

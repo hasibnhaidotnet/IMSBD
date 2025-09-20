@@ -1,0 +1,17 @@
+﻿@model Inventorymanagementsystem.ViewModels.UnitViewModel
+@{
+    ViewData["Title"] = "Unit Details";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Unit Details</h2>
+
+<div class="space-y-2">
+    <div>
+        <strong>Unit Name:</strong> @Model.Name
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 shadow">Edit</a>
+    <a asp-action="Index" class="ml-2 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 shadow">Back to List</a>
+</div>

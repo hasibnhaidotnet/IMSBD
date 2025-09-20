@@ -1,0 +1,20 @@
+﻿@model Inventorymanagementsystem.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2 class="text-2xl font-bold mb-4">Product Details</h2>
+<div class="grid grid-cols-2 gap-4">
+    <div><strong>Name:</strong> @Model.Name</div>
+    <div><strong>Code:</strong> @Model.ProductCode</div>
+    <div><strong>Brand:</strong> @Model.Brand</div>
+    <div><strong>Unit:</strong> @Model.Unit?.Name</div>
+    <div><strong>Category:</strong> @Model.Category?.Name</div>
+    <div><strong>SubCategory:</strong> @Model.SubCategory?.Name</div>
+    <div><strong>Purchase Price:</strong> @Model.PurchasePrice</div>
+    <div><strong>Selling Price:</strong> @Model.SellingPrice</div>
+    <div><strong>Minimum Stock:</strong> @Model.MinimumStockAlert</div>
+    <div class="col-span-2"><strong>Notes:</strong> @Model.Notes</div>
+</div>
+<a asp-action="Index" class="mt-4 inline-block text-blue-600 hover:underline">Back to List</a>
+

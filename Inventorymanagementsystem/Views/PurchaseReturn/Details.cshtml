@@ -1,0 +1,50 @@
+﻿@model Inventorymanagementsystem.ViewModels.PurchaseViewModel
+@{
+    ViewData["Title"] = "Purchase Details";
+}
+
+<div class="p-6 bg-white shadow rounded-lg">
+    <h2 class="text-2xl font-bold mb-4">Purchase Details</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+            <strong>Memo No:</strong>
+            <p>@Model.MemoNo</p>
+        </div>
+        <div>
+            <strong>Purchase Date:</strong>
+            <p>@Model.PurchaseDate.ToShortDateString()</p>
+        </div>
+        <div>
+            <strong>Supplier ID:</strong>
+            <p>@Model.ClientId</p>
+        </div>
+    </div>
+
+    <h3 class="text-xl font-semibold mb-2">Purchased Items</h3>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead class="bg-gray-100 text-gray-700">
+            <tr>
+                <th class="px-4 py-2 text-left">Product</th>
+                <th class="px-4 py-2 text-left">Qty</th>
+                <th class="px-4 py-2 text-left">Price</th>
+                <th class="px-4 py-2 text-left">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr class="border-t">
+                    <td class="px-4 py-2">@item.ProductName</td>
+                    <td class="px-4 py-2">@item.Quantity</td>
+                    <td class="px-4 py-2">@item.PurchasePrice</td>
+                    <td class="px-4 py-2">@((item.Quantity * item.PurchasePrice).ToString("0.00"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-6">
+        <a asp-action="Index" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Back to List</a>
+    </div>
+</div>

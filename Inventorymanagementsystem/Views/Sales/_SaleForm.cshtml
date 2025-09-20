@@ -1,0 +1,99 @@
+﻿@* @model Inventorymanagementsystem.ViewModels.SaleViewModel *@
+
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+
+@* <div class="mb-4"> *@
+@*     <label asp-for="ClientId" class="form-label">Buyer</label> *@
+@*     <select asp-for="ClientId" asp-items="Model.Clients" class="form-select"></select> *@
+@*     <span asp-validation-for="ClientId" class="text-danger"></span> *@
+@* </div> *@
+
+@* <div class="mb-4"> *@
+@*     <label asp-for="SaleDate" class="form-label">Date</label> *@
+@*     <input asp-for="SaleDate" class="form-control" type="date" /> *@
+@*     <span asp-validation-for="SaleDate" class="text-danger"></span> *@
+@* </div> *@
+
+@* <div class="mb-4"> *@
+@*     <label asp-for="MemoNo" class="form-label">Memo No.</label> *@
+@*     <input asp-for="MemoNo" class="form-control" readonly /> *@
+@* </div> *@
+
+@* <hr /> *@
+@* <h5>Sale Items</h5> *@
+@* <button type="button" id="add-sale-item" class="btn btn-sm btn-success mb-2">+ Add Item</button> *@
+
+@* <table class="table table-bordered"> *@
+@*     <thead> *@
+@*         <tr> *@
+@*             <th>Product</th> *@
+@*             <th>Qty</th> *@
+@*             <th>Selling Price</th> *@
+@*             <th>Total</th> *@
+@*             <th>Action</th> *@
+@*         </tr> *@
+@*     </thead> *@
+@*     <tbody id="sale-items-body"> *@
+@*         @if (Model.SaleItems != null && Model.SaleItems.Any()) *@
+@*         { *@
+@*             for (int i = 0; i < Model.SaleItems.Count; i++) *@
+@*             { *@
+@*                 <partial name="_AddSaleItemRow" for="@Model.SaleItems[i]" /> *@
+@*             } *@
+@*         } *@
+@*     </tbody> *@
+@* </table> *@
+
+@* <input type="hidden" asp-for="SaleItemsJson" /> *@
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@*     <script> *@
+@*         $(document).ready(function () { *@
+@*             // Add Item Row *@
+@*             $("#add-sale-item").click(function () { *@
+@*                 $.get('/Sales/AddSaleItemRow', function (row) { *@
+@*                     $("#sale-items-body").append(row); *@
+@*                 }); *@
+@*             }); *@
+
+@*             // Remove Item *@
+@*             $(document).on('click', '.remove-item-row', function () { *@
+@*                 $(this).closest('tr').remove(); *@
+@*                 updateJson(); *@
+@*             }); *@
+
+@*             // Update total and JSON on quantity/price change *@
+@*             $(document).on('input', '.quantity-input, .selling-price-input', function () { *@
+@*                 let row = $(this).closest('tr'); *@
+@*                 let qty = parseFloat(row.find('.quantity-input').val()) || 0; *@
+@*                 let price = parseFloat(row.find('.selling-price-input').val()) || 0; *@
+@*                 row.find('.total-price-display').val((qty * price).toFixed(2)); *@
+@*                 updateJson(); *@
+@*             }); *@
+
+@*             // Update JSON before form submit *@
+@*             $("form").submit(function () { *@
+@*                 updateJson(); *@
+@*             }); *@
+
+@*             function updateJson() { *@
+@*                 let items = []; *@
+@*                 $("#sale-items-body tr").each(function () { *@
+@*                     let row = $(this); *@
+@*                     let productId = row.find(".product-select").val(); *@
+@*                     let qty = parseFloat(row.find(".quantity-input").val()) || 0; *@
+@*                     let price = parseFloat(row.find(".selling-price-input").val()) || 0; *@
+
+@*                     if (productId && qty > 0) { *@
+@*                         items.push({ *@
+@*                             ProductId: productId, *@
+@*                             Quantity: qty, *@
+@*                             SellingPrice: price *@
+@*                         }); *@
+@*                     } *@
+@*                 }); *@
+@*                 $("#SaleItemsJson").val(JSON.stringify(items)); *@
+@*             } *@
+@*         }); *@
+@*     </script> *@
+@* } *@

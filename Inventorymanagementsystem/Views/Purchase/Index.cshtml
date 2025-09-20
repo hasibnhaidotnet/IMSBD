@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModels.PurchaseWithPaymentViewModel>
+
+@{
+    ViewData["Title"] = "All Purchases";
+}
+
+<div class="max-w-7xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">All Purchases</h2>
+        <a asp-action="Create" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+            + Add New Purchase
+        </a>
+    </div>
+
+    <div class="overflow-x-auto rounded shadow-inner">
+        <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700 text-gray-900 dark:text-gray-200">
+            <thead class="bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold">
+                <tr>
+                    <th class="px-4 py-3">Memo No</th>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Supplier</th>
+                    <th class="px-4 py-3 text-right">Total Amount</th>
+                    <th class="px-4 py-3 text-right">Paid Amount</th>
+                    <th class="px-4 py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                @foreach (var p in Model)
+                {
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <td class="px-4 py-2">@p.Purchase.MemoNo</td>
+                        <td class="px-4 py-2">@p.Purchase.PurchaseDate.ToShortDateString()</td>
+                        <td class="px-4 py-2">@p.Purchase.Client?.Name</td>
+                        <td class="px-4 py-2 text-right">@p.TotalAmount.ToString("0.00")</td>
+                        <td class="px-4 py-2 text-right">@p.PaidAmount.ToString("0.00")</td>
+                        <td class="px-4 py-2 text-center space-x-3">
+                            <a asp-action="Details" asp-route-id="@p.Purchase.Id" class="text-blue-600 dark:text-blue-400 hover:underline">Details</a>
+                            <a asp-action="Edit" asp-route-id="@p.Purchase.Id" class="text-yellow-600 dark:text-yellow-400 hover:underline">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@p.Purchase.Id" class="text-red-600 dark:text-red-400 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

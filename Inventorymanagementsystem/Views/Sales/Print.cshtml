@@ -1,0 +1,139 @@
+﻿@model Sale
+@{
+    Layout = null;
+    var items = Model.SaleItems.ToList();
+    int serial = 1;
+    decimal total = items.Sum(x => (decimal)x.Quantity * x.SellingPrice);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sale Memo - @Model.Id</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .total-row td {
+            font-weight: bold;
+            border-top: 2px solid #000;
+        }
+
+        .footer {
+            text-align: right;
+            font-style: italic;
+        }
+    </style>
+
+    <style>
+        @Html.Raw("@media print { .no-print { display: none; } }")
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Area 51 </h1>
+            <p><strong>Sale Date:</strong> @Model.SaleDate.ToString("dd MMM yyyy")</p>
+        </div>
+
+        <div class="info">
+            <p><strong>Buyer Name:</strong> @Model.Client?.Name</p>
+            <p><strong>Address:</strong> @Model.Client?.Address</p>
+            <p><strong>Contact:</strong> @Model.Client?.Phone</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th class="text-right">Qty</th>
+                    <th class="text-right">Rate</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in items)
+                {
+                    <tr>
+                        <td>@serial</td>
+                        <td>@item.Product?.Name</td>
+                        <td class="text-right">@item.Quantity</td>
+                        <td class="text-right">@item.SellingPrice.ToString("0.00")</td>
+                        <td class="text-right">@(((decimal)item.Quantity * item.SellingPrice).ToString("0.00"))</td>
+                    </tr>
+                    serial++;
+                }
+
+                <tr class="total-row">
+                    <td colspan="4" class="text-right">Grand Total</td>
+                    <td class="text-right">@total.ToString("0.00")</td>
+                </tr>
+
+                @if (Model.PaidAmount > 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-right">Paid Amount</td>
+                        <td class="text-right">@Model.PaidAmount.ToString("0.00")</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-right">Due Amount</td>
+                        <td class="text-right">@((total - Model.PaidAmount).ToString("0.00"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Thank you for your business!</p>
+        </div>
+
+        <div class="no-print" style="margin-top: 20px;">
+            <button onclick="window.print()">Print</button>
+            <a href="/Sales/Index">Back</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Inventorymanagementsystem.ViewModels.SaleWithPaymentViewModel>
+
+@{
+    ViewData["Title"] = "Sales List";
+}
+
+<div class="max-w-7xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg text-gray-200">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold">📋 Sales List</h2>
+        <a asp-action="Create" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow transition">
+            + New Sale
+        </a>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg shadow-inner bg-gray-900">
+        <table class="min-w-full divide-y divide-gray-700 text-gray-200">
+            <thead class="bg-gray-700 text-left text-sm font-semibold">
+                <tr>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Buyer</th>
+                    <th class="px-4 py-3 text-right">Total Amount</th>
+                    <th class="px-4 py-3 text-right">Paid Amount</th>
+                    <th class="px-4 py-3 text-right">Due Amount</th>
+                    <th class="px-4 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+                @foreach (var item in Model)
+                {
+                    var dueAmount = item.TotalAmount - item.PaidAmount;
+                    <tr class="hover:bg-gray-700 transition">
+                        <td class="px-4 py-3">@item.Sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                        <td class="px-4 py-3">@item.Sale.Client?.Name</td>
+                        <td class="px-4 py-3 text-right font-semibold text-green-400">৳ @item.TotalAmount.ToString("0.00")</td>
+                        <td class="px-4 py-3 text-right font-semibold text-blue-400">৳ @item.PaidAmount.ToString("0.00")</td>
+                        <td class="px-4 py-3 text-right font-semibold text-red-500">৳ @dueAmount.ToString("0.00")</td>
+                        <td class="px-4 py-3 space-x-2 whitespace-nowrap">
+                            <a asp-action="Details" asp-route-id="@item.Sale.Id" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium transition">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Sale.Id" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm font-medium transition">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Sale.Id" class="inline-block bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition">Delete</a>
+                            <a asp-action="Print" asp-route-id="@item.Sale.Id" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition">Print</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

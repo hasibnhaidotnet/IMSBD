@@ -1,0 +1,83 @@
+﻿@model InventorymanagementSystem.ViewModels.SaleViewModel
+@{
+    ViewData["Title"] = "Sale Details";
+
+    // Grand Total হিসাব
+    decimal grandTotal = 0;
+    foreach (var item in Model.SaleItems)
+    {
+        grandTotal += (decimal)item.Quantity * item.SellingPrice;
+    }
+
+    // Paid Amount Controller থেকে Model-এ আছে (Model.PaidAmount)
+    var paidAmount = Model.PaidAmount;
+
+    // Due Amount = Grand Total - Paid Amount
+    var dueAmount = grandTotal - paidAmount;
+}
+
+<div class="max-w-7xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg text-gray-200">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold">📋 Sale Details</h2>
+        <a asp-action="Index" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded shadow-sm transition">
+            ← Back to List
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div>
+            <label class="block text-sm font-semibold text-gray-400 mb-1">Memo No</label>
+            <div class="text-white">@Model.MemoNo</div>
+        </div>
+        <div>
+            <label class="block text-sm font-semibold text-gray-400 mb-1">Sale Date</label>
+            <div class="text-white">@Model.SaleDate.ToString("dd MMM yyyy")</div>
+        </div>
+        <div>
+            <label class="block text-sm font-semibold text-gray-400 mb-1">Buyer</label>
+            <div class="text-white">@Model.ClientList.FirstOrDefault(c => c.Value == Model.ClientId.ToString())?.Text</div>
+        </div>
+    </div>
+
+    <h3 class="text-xl font-semibold mb-3 border-b border-gray-700 pb-2">🛒 Sold Items</h3>
+
+    <div class="overflow-x-auto rounded-lg shadow-inner bg-gray-900">
+        <table class="min-w-full divide-y divide-gray-700 text-gray-200">
+            <thead class="bg-gray-700 text-left text-sm font-semibold">
+                <tr>
+                    <th class="px-4 py-3">Product</th>
+                    <th class="px-4 py-3 text-right">Quantity</th>
+                    <th class="px-4 py-3 text-right">Selling Price</th>
+                    <th class="px-4 py-3 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+                @foreach (var item in Model.SaleItems)
+                {
+                    var productName = Model.ProductList.FirstOrDefault(p => p.Value == item.ProductId.ToString())?.Text;
+                    var total = (decimal)item.Quantity * item.SellingPrice;
+                    <tr class="hover:bg-gray-700 transition">
+                        <td class="px-4 py-2">@productName</td>
+                        <td class="px-4 py-2 text-right">@item.Quantity</td>
+                        <td class="px-4 py-2 text-right">@item.SellingPrice.ToString("0.00")</td>
+                        <td class="px-4 py-2 text-right">@total.ToString("0.00")</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="bg-gray-800 font-semibold">
+                <tr>
+                    <th colspan="3" class="px-4 py-3 text-right">Grand Total:</th>
+                    <th class="px-4 py-3 text-right">@grandTotal.ToString("0.00")</th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="px-4 py-3 text-right text-green-400">Paid Amount:</th>
+                    <th class="px-4 py-3 text-right text-green-400">৳ @paidAmount.ToString("0.00")</th>
+                </tr>
+                <tr>
+                    <th colspan="3" class="px-4 py-3 text-right text-red-500">Due Amount:</th>
+                    <th class="px-4 py-3 text-right text-red-500">৳ @dueAmount.ToString("0.00")</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

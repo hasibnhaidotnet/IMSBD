@@ -1,0 +1,119 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Inventory System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+    <style>
+        input, textarea, select {
+            background-color: #1f2937; /* bg-gray-800 */
+            color: #f9fafb; /* text-white */
+            border: 1px solid #4b5563; /* border-gray-600 */
+            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: box-shadow 0.2s ease;
+        }
+
+            input:focus, textarea:focus, select:focus {
+                box-shadow: 0 0 0 2px #3b82f6; /* focus:ring-2 blue-500 */
+                outline: none;
+            }
+
+        label {
+            font-size: 0.875rem;
+            color: #f3f4f6;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        a.active {
+            background-color: #374151; /* active nav item */
+            font-weight: 700;
+        }
+        /* Scrollbar styling for main content */
+        main::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        main::-webkit-scrollbar-thumb {
+            background-color: #4b5563;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script defer>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("hidden");
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-gray-800 w-64 shadow-lg p-5 hidden md:block">
+            <div class="text-white text-2xl font-bold mb-6 tracking-wide select-none">
+                Inventory System
+            </div>
+            <nav class="space-y-2 text-sm font-medium text-gray-200">
+                <a href="/Dashboard" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard") ? "active" : "")"> Dashboard</a>
+                <a href="/MemoReport" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Memo") ? "active" : "")"> Product Reports</a>
+                <a href="/CurrentStock" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Stock") ? "active" : "")">Current Stock</a>
+                <a href="/Category" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Category") ? "active" : "")"> Category</a>
+                <a href="/SubCategory" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "SubCategory") ? "active" : "")">SubCategory</a>
+                <a href="/Unit" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Unit") ? "active" : "")"> Unit</a>
+                <a href="/Product" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Product") ? "active" : "")"> Product</a>
+                <a href="/Purchase" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Purchase") ? "active" : "")"> Purchase</a>
+                <a href="/PurchaseReturn" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "PurchaseReturn") ? "active" : "")">Purchase Return</a>
+                <a href="/Sales" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Sales") ? "active" : "")"> Sales</a>
+                <a href="/SalesReturn" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "SalesReturn") ? "active" : "")"> Sales Return</a>
+                <a href="/Quotation" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Quotation") ? "active" : "")"> Quotation</a>
+                <a href="/Client" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Client") ? "active" : "")"> Clients</a>
+                <a href="/Transactions" class="block px-4 py-2 rounded hover:bg-gray-700 @((ViewContext.RouteData.Values["controller"]?.ToString() == "Client") ? "active" : "")"> Transactions</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+
+            <!-- Mobile Topbar -->
+            <header class="bg-gray-800 px-4 py-3 flex justify-between items-center md:hidden">
+                <button onclick="toggleSidebar()" class="text-gray-300" aria-label="Toggle sidebar menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <span class="text-white text-lg font-semibold select-none">Inventory</span>
+            </header>
+
+            <!-- Page Content -->
+            <main class="p-6 overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-gray-600">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts: jQuery & validation from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" crossorigin="anonymous"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

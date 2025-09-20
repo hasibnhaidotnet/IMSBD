@@ -1,0 +1,59 @@
+﻿@model List<Inventorymanagementsystem.ViewModel.ProductStockViewModel>
+
+@{
+    ViewData["Title"] = "Low Stock Alert";
+}
+
+<div class="max-w-7xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-3xl font-semibold text-red-500">📦 Low Stock Products</h2>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="bg-green-700 text-green-100 p-4 rounded shadow">
+            🎉 Great! No low stock products found.
+        </div>
+    }
+    else
+    {
+        <div class="overflow-x-auto rounded shadow-inner bg-gray-900">
+            <table class="min-w-full divide-y divide-gray-700 text-gray-200">
+                <thead class="bg-gray-700 text-center text-sm font-semibold">
+                    <tr>
+                        <th class="py-3 px-4">SL</th>
+                        <th class="py-3 px-4 text-left">Product</th>
+                        <th class="py-3 px-4 text-left">Category</th>
+                        <th class="py-3 px-4 text-left">SubCategory</th>
+                        <th class="py-3 px-4 text-left">Unit</th>
+                        <th class="py-3 px-4">Purchased</th>
+                        <th class="py-3 px-4">Sold</th>
+                        <th class="py-3 px-4">Damaged</th>
+                        <th class="py-3 px-4">Purchase Return</th>
+                        <th class="py-3 px-4">Sales Return</th>
+                        <th class="py-3 px-4">📉 Current Stock</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <tr class="text-center @((item.CurrentStock <= 5) ? "bg-red-900 font-bold" : "") hover:bg-gray-700 transition">
+                            <td class="py-2 px-4">@((i + 1))</td>
+                            <td class="py-2 px-4 text-left">@item.ProductName</td>
+                            <td class="py-2 px-4 text-left">@item.CategoryName</td>
+                            <td class="py-2 px-4 text-left">@item.SubCategoryName</td>
+                            <td class="py-2 px-4 text-left">@item.UnitName</td>
+                            <td class="py-2 px-4">@item.TotalPurchased</td>
+                            <td class="py-2 px-4">@item.TotalSold</td>
+                            <td class="py-2 px-4">@item.TotalDamaged</td>
+                            <td class="py-2 px-4">@item.TotalPurchaseReturn</td>
+                            <td class="py-2 px-4">@item.TotalSalesReturn</td>
+                            <td class="py-2 px-4 font-bold">@item.CurrentStock</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

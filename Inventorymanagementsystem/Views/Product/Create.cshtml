@@ -1,0 +1,70 @@
+﻿@model Inventorymanagementsystem.ViewModels.ProductViewModel
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h2 class="text-2xl font-bold mb-4">Create Product</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label asp-for="Name" class="block font-medium"></label>
+            <input asp-for="Name" class="form-input w-full" />
+            <span asp-validation-for="Name" class="text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="Brand" class="block font-medium"></label>
+            <input asp-for="Brand" class="form-input w-full" />
+        </div>
+
+        <div>
+            <label asp-for="ProductCode" class="block font-medium"></label>
+            <input asp-for="ProductCode" class="form-input w-full" />
+            <span asp-validation-for="ProductCode" class="text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="UnitId" class="block font-medium"></label>
+            <select asp-for="UnitId" asp-items="Model.UnitList" class="form-select w-full"></select>
+            <span asp-validation-for="UnitId" class="text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="CategoryId" class="block font-medium"></label>
+            <select asp-for="CategoryId" asp-items="Model.CategoryList" class="form-select w-full"></select>
+            <span asp-validation-for="CategoryId" class="text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="SubCategoryId" class="block font-medium"></label>
+            <select asp-for="SubCategoryId" asp-items="Model.SubCategoryList" class="form-select w-full"></select>
+            <span asp-validation-for="SubCategoryId" class="text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="PurchasePrice" class="block font-medium"></label>
+            <input asp-for="PurchasePrice" class="form-input w-full" />
+        </div>
+
+        <div>
+            <label asp-for="SellingPrice" class="block font-medium"></label>
+            <input asp-for="SellingPrice" class="form-input w-full" />
+        </div>
+
+        <div>
+            <label asp-for="MinimumStockAlert" class="block font-medium"></label>
+            <input asp-for="MinimumStockAlert" class="form-input w-full" />
+        </div>
+
+        <div class="md:col-span-2">
+            <label asp-for="Notes" class="block font-medium"></label>
+            <textarea asp-for="Notes" class="form-textarea w-full"></textarea>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Save</button>
+        <a asp-action="Index" class="ml-2 text-gray-600 hover:underline">Cancel</a>
+    </div>
+</form>
